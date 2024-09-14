@@ -2,9 +2,9 @@ from fastapi import FastAPI
 from starlette.responses import RedirectResponse
 
 # Base de datos
-from FastAPI.app.database import database as connection
+from FastAPI.app.config.database import database as connection
 
-from routes.tienda_route import tienda_route
+from routes.store_route import store_route
 from routes.tienda_route import tienda_route
 
 
