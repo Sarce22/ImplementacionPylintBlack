@@ -12,6 +12,7 @@ mccabe==0.7.0
 mypy-extensions==1.0.0
 packaging==24.1
 pathspec==0.12.1
+peewee==3.17.6
 platformdirs==4.3.3
 pydantic==2.9.1
 pydantic_core==2.23.3
