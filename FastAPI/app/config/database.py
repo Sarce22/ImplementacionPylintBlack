@@ -1,11 +1,13 @@
+import os
 from dotenv import load_dotenv
 from peewee import *
 from datetime import date
 
-import os
 
+# Load environment variables
 load_dotenv()
 
+# MySQL database configuration
 database = MySQLDatabase(
     os.getenv("MYSQL_DATABASE"),
     user=os.getenv("MYSQL_USER"),
@@ -14,26 +16,25 @@ database = MySQLDatabase(
     port=int(os.getenv("MYSQL_PORT")),
 )
 
-
-class TiendaModel(Model):
+# Store model definition
+class StoreModel(Model):
     id = AutoField(primary_key=True)
-    username = CharField(max_length=50)
-    email = CharField(max_length=50)
-    password = CharField(max_length=50)
+    name = CharField(max_length=100)
+    address = CharField(max_length=255)
 
     class Meta:
         database = database
-        table_name = "users"
+        table_name = "store"  # Table name in the database
 
-
-class InventarioModel(Model):
+# Inventory model definition
+class InventoryModel(Model):
     id = AutoField(primary_key=True)
-    user_id = ForeignKeyField(UserModel, backref='orders', on_delete='CASCADE')
-    item_id = IntegerField()
-    total_amount = FloatField()
-    status = CharField(max_length=50)
-    date = DateField(default=date.today)
+    store_id = ForeignKeyField(StoreModel, backref='inventories', on_delete='CASCADE')
+    product_id = IntegerField()
+    quantity = IntegerField()
 
     class Meta:
         database = database
-        table_name = "orders"
+        table_name = "inventory"  # Table name in the database
+
+

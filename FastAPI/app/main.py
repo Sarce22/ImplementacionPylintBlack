@@ -1,36 +1,39 @@
 from fastapi import FastAPI
 from starlette.responses import RedirectResponse
 
-# Base de datos
-from FastAPI.app.database import database as connection
-
-from routes.tienda_route import tienda_route
-from routes.tienda_route import tienda_route
-
-
-
+# Standard imports should come first
 from contextlib import asynccontextmanager
+
+# Database connection
+from app.config.database import database as connection  # Adjusted import path
+
+# Routes
+from ..app.routes.inventory_route import inventory_route  # Adjusted import path
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Conectar a la base de datos si la conexión está cerrada
+    """Manage the lifespan of the application, ensuring the database connection is handled properly."""
+    # Connect to the database if it's closed
     if connection.is_closed():
         connection.connect()
     try:
-        yield  # Aquí es donde se ejecutará la aplicación
+        yield  # This is where the application will run
     finally:
-        # Cerrar la conexión cuando la aplicación se detenga
+        # Close the connection when the app stops
         if not connection.is_closed():
             connection.close()
 
 
+# Initialize FastAPI app
 app = FastAPI(lifespan=lifespan)
 
 
 @app.get("/")
 def read_root():
+    """Redirect to the API docs."""
     return RedirectResponse(url="/docs")
 
 
-app.include_router(tienda_route, prefix="/api/tienda", tags=["tienda"])
+# Include inventory routes
+app.include_router(inventory_route, prefix="/api/tienda", tags=["tienda"])
