@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class inventory(BaseModel):
+class Inventory(BaseModel):
     """
     Represents an inventory item.
 
