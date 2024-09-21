@@ -3,8 +3,8 @@ This module contains the API routes for managing inventory in the FastAPI applic
 """
 
 from fastapi import APIRouter, Body, HTTPException
-from ..models.inventory import Inventory
-from ..config.database import InventoryModel
+from models.inventory import Inventory
+from config.database import InventoryModel
 
 inventory_route = APIRouter()
 

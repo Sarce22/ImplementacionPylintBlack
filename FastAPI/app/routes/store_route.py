@@ -3,8 +3,8 @@ This module contains the API routes for managing stores in the FastAPI applicati
 """
 
 from fastapi import APIRouter, Body, HTTPException
-from ..models.store import Store  # Importing the Store model correctly
-from ..config.database import StoreModel  # Assuming you have a database model for stores.
+from models.store import Store  # Importing the Store model correctly
+from config.database import StoreModel  # Assuming you have a database model for stores.
 
 store_route = APIRouter()
 

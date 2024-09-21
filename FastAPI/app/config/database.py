@@ -7,6 +7,7 @@ including StoreModel and InventoryModel.
 from datetime import date
 import os
 from dotenv import load_dotenv
+
 from peewee import (
     Model,
     AutoField,
