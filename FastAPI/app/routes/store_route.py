@@ -1,21 +1,28 @@
+"""
+This module contains the API routes for managing stores in the FastAPI application.
+"""
+
 from fastapi import APIRouter, Body, HTTPException
 from models.store import Store
-
-# Assuming you have a database model similar to `UserModel` for stores.
-from database import StoreModel  
+from config.database import StoreModel  # Assuming you have a database model for stores.
 
 store_route = APIRouter()
 
+
 @store_route.get("/stores")
 def get_stores():
-    # Logic to fetch and return all stores
+    """
+    Fetch and return all stores.
+    """
     stores = StoreModel.all()
     return stores
 
 
 @store_route.get("/stores/{store_id}")
 def get_store(store_id: str):
-    # Logic to fetch and return a specific store by ID
+    """
+    Fetch and return a specific store by ID.
+    """
     store = StoreModel.get_or_none(StoreModel.id == store_id)
     if not store:
         raise HTTPException(status_code=404, detail="Store not found")
@@ -24,7 +31,9 @@ def get_store(store_id: str):
 
 @store_route.post("/stores")
 def create_store(store: Store = Body(...)):
-    # Logic to create a new store
+    """
+    Create a new store with the provided details.
+    """
     new_store = StoreModel.create(
         id=store.id, nombre=store.nombre, direccion=store.direccion
     )
@@ -33,7 +42,9 @@ def create_store(store: Store = Body(...)):
 
 @store_route.put("/stores/{store_id}")
 def update_store(store_id: str, store_data: Store = Body(...)):
-    # Logic to update a store by ID
+    """
+    Update an existing store by ID with new details.
+    """
     store = StoreModel.get_or_none(StoreModel.id == store_id)
     if not store:
         raise HTTPException(status_code=404, detail="Store not found")
@@ -45,7 +56,9 @@ def update_store(store_id: str, store_data: Store = Body(...)):
 
 @store_route.delete("/stores/{store_id}")
 def delete_store(store_id: str):
-    # Logic to delete a store by ID
+    """
+    Delete a store by ID.
+    """
     store = StoreModel.get_or_none(StoreModel.id == store_id)
     if not store:
         raise HTTPException(status_code=404, detail="Store not found")

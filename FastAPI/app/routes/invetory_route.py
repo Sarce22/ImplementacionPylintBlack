@@ -4,7 +4,7 @@ This module contains the API routes for managing inventory in the FastAPI applic
 
 from fastapi import APIRouter, Body, HTTPException
 from models.inventory import Inventory
-from config.database import InventarioModel
+from config.database import InventoryModel
 
 inventory_route = APIRouter()
 
@@ -14,7 +14,7 @@ def create_inventory(inventory: Inventory = Body(...)):
     """
     Create a new inventory item.
     """
-    new_inventory = InventarioModel.create(
+    new_inventory = InventoryModel.create(
         id=inventory.id,
         shop_id=inventory.shop_id,
         product_id=inventory.product_id,
@@ -28,7 +28,7 @@ def get_inventory():
     """
     Fetch and return all inventory items.
     """
-    inventory = InventarioModel.all()
+    inventory = InventoryModel.all()
     return inventory
 
 
@@ -37,7 +37,7 @@ def get_inventory_by_id(inventory_id: str):
     """
     Fetch and return a specific inventory item by ID.
     """
-    inventory = InventarioModel.get_or_none(InventarioModel.id == inventory_id)
+    inventory = InventoryModel.get_or_none(InventoryModel.id == inventory_id)
     if not inventory:
         raise HTTPException(status_code=404, detail="Inventory not found")
     return inventory
@@ -48,7 +48,7 @@ def update_inventory(inventory_id: str, inventory_data: Inventory = Body(...)):
     """
     Update an inventory item by ID.
     """
-    inventory = InventarioModel.get_or_none(InventarioModel.id == inventory_id)
+    inventory = InventoryModel.get_or_none(InventoryModel.id == inventory_id)
     if not inventory:
         raise HTTPException(status_code=404, detail="Inventory not found")
     inventory.shop_id = inventory_data.shop_id
@@ -63,7 +63,7 @@ def delete_inventory(inventory_id: str):
     """
     Delete an inventory item by ID.
     """
-    inventory = InventarioModel.get_or_none(InventarioModel.id == inventory_id)
+    inventory = InventoryModel.get_or_none(InventoryModel.id == inventory_id)
     if not inventory:
         raise HTTPException(status_code=404, detail="Inventory not found")
     inventory.delete_instance()
