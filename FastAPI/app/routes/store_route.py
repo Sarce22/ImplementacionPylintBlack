@@ -3,8 +3,8 @@ This module contains the API routes for managing stores in the FastAPI applicati
 """
 
 from fastapi import APIRouter, Body, HTTPException
-from models.store import Store
-from config.database import StoreModel  # Assuming you have a database model for stores.
+from ..models.store import Store  # Importing the Store model correctly
+from ..config.database import StoreModel  # Assuming you have a database model for stores.
 
 store_route = APIRouter()
 
@@ -35,7 +35,7 @@ def create_store(store: Store = Body(...)):
     Create a new store with the provided details.
     """
     new_store = StoreModel.create(
-        id=store.id, nombre=store.nombre, direccion=store.direccion
+        id=store.id, nombre=store.name, direccion=store.address
     )
     return new_store
 
@@ -48,8 +48,8 @@ def update_store(store_id: str, store_data: Store = Body(...)):
     store = StoreModel.get_or_none(StoreModel.id == store_id)
     if not store:
         raise HTTPException(status_code=404, detail="Store not found")
-    store.nombre = store_data.nombre
-    store.direccion = store_data.direccion
+    store.nombre = store_data.name
+    store.direccion = store_data.address
     store.save()
     return store
 
