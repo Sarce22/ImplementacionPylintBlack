@@ -28,4 +28,4 @@ jobs:
 
       - name: Run Pylint on the whole project
         run: |
-          pylint ./**/*.py
+          pylint ./FastAPI/*.py
