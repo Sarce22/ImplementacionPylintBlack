@@ -7,7 +7,14 @@ including StoreModel and InventoryModel.
 from datetime import date
 import os
 from dotenv import load_dotenv
-from peewee import *
+from peewee import (MySQLDatabase,
+                    Model,
+                    AutoField,
+                    CharField,
+                    ForeignKeyField,
+                    IntegerField,
+                    FloatField,
+                    DateField)
 
 load_dotenv()
 
@@ -37,6 +44,9 @@ class StoreModel(Model):
     password = CharField(max_length=50)
 
     class Meta:
+        """
+        Meta class 
+        """
         database = database
         table_name = "store"
 
@@ -61,5 +71,8 @@ class InventoryModel(Model):
     date = DateField(default=date.today)
 
     class Meta:
+        """
+        Meta class 
+        """
         database = database
-        table_name = "invetory"
+        table_name = "inventory"

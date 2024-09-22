@@ -1,14 +1,21 @@
+"""
+Module for defining the Store model.
+
+This module contains the Pydantic model representing a store,
+including its attributes and validations.
+"""
+
 from pydantic import BaseModel
 
 
 class Store(BaseModel):
     """
-    Represents an Store item.
+    Represents a store item.
 
     Attributes:
-        id (int): The unique identifier of the store item.
-        name (store): The identifier of the shop that owns the inventory item.
-        address (str): The identifier of the product that the inventory item represents.
+        id (int): The unique identifier of the store.
+        name (str): The name of the store.
+        address (str): The address of the store.
     """
     id: int
     name: str

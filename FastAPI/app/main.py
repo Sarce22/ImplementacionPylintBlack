@@ -5,7 +5,7 @@ This module initializes the FastAPI app and sets up the database connection
 management and route inclusion.
 """
 
-from contextlib import asynccontextmanager  
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends
 from helpers.api_key_auth import get_api_key
 from starlette.responses import RedirectResponse
@@ -17,7 +17,7 @@ from routes.invetory_route import inventory_route
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan():
     """
     Context manager to manage the lifespan of the FastAPI application.
 
@@ -39,7 +39,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Pylint Implementacion",
     version="2.0",
-    contact={"name": "Juan Pablo Acosta Y Sebastian Arce", 
+    contact={"name": "Juan Pablo Acosta Y Sebastian Arce",
              "url": "https://github.com/Sarce22/ImplementacionPylintBlack",
              "email": "sebastian@gmail.com"},
 )
@@ -57,5 +57,15 @@ async def read_root() -> RedirectResponse:
 
 
 # Include routers for store and inventory routes
-app.include_router(store_route, prefix="/api/tienda", tags=["Store"], dependencies=[Depends(get_api_key)])
-app.include_router(inventory_route, prefix="/api/inventario", tags=["Inventory"], dependencies=[Depends(get_api_key)])
+app.include_router(
+    store_route,
+    prefix="/api/tienda",
+    tags=["Store"],
+    dependencies=[Depends(get_api_key)]
+)
+app.include_router(
+    inventory_route,
+    prefix="/api/inventario",
+    tags=["Inventory"],
+    dependencies=[Depends(get_api_key)]
+)

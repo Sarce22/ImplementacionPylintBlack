@@ -1,3 +1,9 @@
+"""
+This module contains the data model for the inventory in the FastAPI application.
+
+It defines the Inventory model, which represents an inventory item in the system.
+"""
+
 from pydantic import BaseModel
 
 class Inventory(BaseModel):

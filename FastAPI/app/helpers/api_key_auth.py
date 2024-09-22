@@ -29,10 +29,10 @@ API_KEY = os.getenv("API_KEY")
 API_KEY_NAME = API_KEY
 
 # Define the API key header object with the name of the key fetched from the environment.
-api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
+api_key_header_2 = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
 
 
-async def get_api_key(api_key_header: str = Security(api_key_header)):
+async def get_api_key(api_key_header: str = Security(api_key_header_2)):
     """
     Verifies the provided API key in the request header.
 
@@ -43,16 +43,17 @@ async def get_api_key(api_key_header: str = Security(api_key_header)):
         str: The validated API key if it matches the expected key.
 
     Raises:
-        HTTPException: If the API key is invalid or missing, returns a 403 error with a custom message.
+        HTTPException: If the API key is invalid or missing,
+        returns a 403 error with a custom message.
     """
     if api_key_header == API_KEY:
         return api_key_header
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail={
-                "status": "False",
-                "status_code": status.HTTP_403_FORBIDDEN,
-                "message": "Unauthorized",
-            },
-        )
+
+    raise HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail={
+            "status": "False",
+            "status_code": status.HTTP_403_FORBIDDEN,
+            "message": "Unauthorized",
+        },
+    )

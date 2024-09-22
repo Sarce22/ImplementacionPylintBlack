@@ -15,7 +15,10 @@ def get_stores():
         stores = StoreService.get_all_stores()
         return stores
     except Exception as exc:
-        raise HTTPException(status_code=500, detail="An error occurred while fetching stores") from exc
+        raise HTTPException(
+            status_code=500,
+            detail="An error occurred while fetching stores"
+        ) from exc
 
 
 @store_route.get("/stores/{store_id}")
@@ -27,7 +30,10 @@ def get_store(store_id: str):
             raise HTTPException(status_code=404, detail="Store not found")
         return store
     except Exception as exc:
-        raise HTTPException(status_code=500, detail="An error occurred while fetching the store") from exc
+        raise HTTPException(
+            status_code=500,
+            detail="An error occurred while fetching the store"
+        ) from exc
 
 
 @store_route.post("/stores")
@@ -35,11 +41,16 @@ def create_store(store: Store = Body(...)):
     """Create a new store with the provided details."""
     try:
         new_store = StoreService.create_store(
-            id=store.id, name=store.name, address=store.address
+            id_store=store.id,
+            name=store.name,
+            address=store.address
         )
         return {"message": "Store created", "store": new_store}
     except Exception as exc:
-        raise HTTPException(status_code=500, detail="An error occurred while creating the store") from exc
+        raise HTTPException(
+            status_code=500,
+            detail="An error occurred while creating the store"
+        ) from exc
 
 
 @store_route.put("/stores/{store_id}")
@@ -51,7 +62,10 @@ def update_store(store_id: str, store_data: Store = Body(...)):
             raise HTTPException(status_code=404, detail="Store not found")
         return {"message": "Store updated", "store": updated_store}
     except Exception as exc:
-        raise HTTPException(status_code=500, detail="An error occurred while updating the store") from exc
+        raise HTTPException(
+            status_code=500,
+            detail="An error occurred while updating the store"
+        ) from exc
 
 
 @store_route.delete("/stores/{store_id}")
@@ -63,4 +77,7 @@ def delete_store(store_id: str):
             raise HTTPException(status_code=404, detail="Store not found")
         return {"message": "Store deleted successfully"}
     except Exception as exc:
-        raise HTTPException(status_code=500, detail="An error occurred while deleting the store") from exc
+        raise HTTPException(
+            status_code=500,
+            detail="An error occurred while deleting the store"
+        ) from exc

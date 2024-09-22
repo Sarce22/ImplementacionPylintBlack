@@ -17,9 +17,15 @@ def create_inventory(inventory: Inventory = Body(...)):
             product_id=inventory.product_id,
             quantity=inventory.quantity
         )
-        return {"message": "Inventory item created", "inventory": new_inventory}
+        return {
+            "message": "Inventory item created",
+            "inventory": new_inventory
+        }
     except Exception as exc:
-        raise HTTPException(status_code=500, detail="An error occurred while creating the inventory") from exc
+        raise HTTPException(
+            status_code=500,
+            detail="An error occurred while creating the inventory"
+        ) from exc
 
 
 @inventory_route.get("/inventory")
@@ -29,7 +35,10 @@ def get_inventory():
         inventory = InventoryService.get_all_inventory()
         return inventory
     except Exception as exc:
-        raise HTTPException(status_code=500, detail="An error occurred while fetching the inventory") from exc
+        raise HTTPException(
+            status_code=500,
+            detail="An error occurred while fetching the inventory"
+        ) from exc
 
 
 @inventory_route.get("/inventory/{inventory_id}")
@@ -41,7 +50,10 @@ def get_inventory_by_id(inventory_id: str):
             raise HTTPException(status_code=404, detail="Inventory not found")
         return inventory
     except Exception as exc:
-        raise HTTPException(status_code=500, detail="An error occurred while fetching the inventory item") from exc
+        raise HTTPException(
+            status_code=500,
+            detail="An error occurred while fetching the inventory item"
+        ) from exc
 
 
 @inventory_route.put("/inventory/{inventory_id}")
@@ -51,9 +63,15 @@ def update_inventory(inventory_id: str, inventory_data: Inventory = Body(...)):
         updated_inventory = InventoryService.update_inventory(inventory_id, inventory_data)
         if not updated_inventory:
             raise HTTPException(status_code=404, detail="Inventory not found")
-        return {"message": "Inventory updated", "inventory": updated_inventory}
+        return {
+            "message": "Inventory updated",
+            "inventory": updated_inventory
+        }
     except Exception as exc:
-        raise HTTPException(status_code=500, detail="An error occurred while updating the inventory") from exc
+        raise HTTPException(
+            status_code=500,
+            detail="An error occurred while updating the inventory"
+        ) from exc
 
 
 @inventory_route.delete("/inventory/{inventory_id}")
@@ -65,4 +83,7 @@ def delete_inventory(inventory_id: str):
             raise HTTPException(status_code=404, detail="Inventory not found")
         return {"message": "Inventory deleted successfully"}
     except Exception as exc:
-        raise HTTPException(status_code=500, detail="An error occurred while deleting the inventory") from exc
+        raise HTTPException(
+            status_code=500,
+            detail="An error occurred while deleting the inventory"
+        ) from exc

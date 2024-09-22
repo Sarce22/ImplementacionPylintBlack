@@ -10,10 +10,10 @@ class StoreService:
     """Service class for handling business logic related to stores."""
 
     @staticmethod
-    def create_store(id: int, name: str, address: str) -> StoreModel:
+    def create_store(id_store: int, name: str, address: str) -> StoreModel:
         """Creates a new store in the database."""
         try:
-            return StoreModel.create(id=id, nombre=name, direccion=address)
+            return StoreModel.create(id=id_store, nombre=name, direccion=address)
         except Exception as exc:
             raise RuntimeError(f"Error creating store: {exc}") from exc
 
