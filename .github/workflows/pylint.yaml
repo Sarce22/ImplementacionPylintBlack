@@ -3,10 +3,10 @@ name: Pylint Check
 on:
   push:
     branches:
-      - "**" # Se ejecuta en todas las ramas
+      - "**" # Runs on all branches
   pull_request:
     branches:
-      - "**" # Se ejecuta en pull requests desde todas las ramas
+      - "**" # Runs on pull requests from all branches
 
 jobs:
   lint:
@@ -26,15 +26,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r FastAPI/requirements.txt
 
-
       - name: Run Pylint on the whole project
         run: |
           pylint ./**/*.py
-
-      - name: Analysing the code with pylint
-        run: |
-          if [ ${{ steps.rate.outputs.rate }} -gt 7 ]; then
-            pylint $(git ls-files '*.py')
-          else
-            echo "Rate is not greater than 7. Skipping pylint analysis."
-          fi
