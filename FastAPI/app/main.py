@@ -6,7 +6,8 @@ management and route inclusion.
 """
 
 from contextlib import asynccontextmanager  
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
+from helpers.api_key_auth import get_api_key
 from starlette.responses import RedirectResponse
 
 # Base de datos
@@ -35,7 +36,13 @@ async def lifespan(app: FastAPI):
             connection.close()
 
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(
+    title="Pylint Implementacion",
+    version="2.0",
+    contact={"name": "Juan Pablo Acosta Y Sebastian Arce", 
+             "url": "https://github.com/Sarce22/ImplementacionPylintBlack",
+             "email": "sebastian@gmail.com"},
+)
 
 
 @app.get("/")
@@ -50,5 +57,5 @@ async def read_root() -> RedirectResponse:
 
 
 # Include routers for store and inventory routes
-app.include_router(store_route, prefix="/api/tienda", tags=["tienda"])
-app.include_router(inventory_route, prefix="/api/inventario", tags=["inventario"])
+app.include_router(store_route, prefix="/api/tienda", tags=["Store"], dependencies=[Depends(get_api_key)])
+app.include_router(inventory_route, prefix="/api/inventario", tags=["Inventory"], dependencies=[Depends(get_api_key)])
