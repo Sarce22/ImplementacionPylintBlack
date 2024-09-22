@@ -38,7 +38,7 @@ class StoreModel(Model):
 
     class Meta:
         database = database
-        table_name = "users"
+        table_name = "store"
 
 
 class InventoryModel(Model):
@@ -62,4 +62,4 @@ class InventoryModel(Model):
 
     class Meta:
         database = database
-        table_name = "orders"
+        table_name = "invetory"
