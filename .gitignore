@@ -2,5 +2,5 @@
 .env
 __pycache__
 MySQL/volumes/git 
-venv/
+venv
 
